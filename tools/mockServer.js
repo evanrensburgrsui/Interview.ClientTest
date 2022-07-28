@@ -1,4 +1,3 @@
-
 /* eslint-disable no-console */
 const jsonServer = require("json-server");
 const server = jsonServer.create();
@@ -9,7 +8,7 @@ const middlewares = jsonServer.defaults();
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
-server.use(function(req, res, next) {
+server.use(function (req, res, next) {
   setTimeout(next, 1000);
 });
 
@@ -20,8 +19,8 @@ server.use((req, res, next) => {
   next();
 });
 
-server.post("/tasks/", function(req, res, next) {
-  const error = validateCourse(req.body);
+server.post("/tasks/", function (req, res, next) {
+  const error = validateTask(req.body);
   if (error) {
     res.status(400).send(error);
   } else {
@@ -44,9 +43,8 @@ function createSlug(value) {
     .toLowerCase();
 }
 
-function validateCourse(course) {
-  if (!course.title) return "Title is required.";
-  if (!course.authorId) return "Author is required.";
-  if (!course.category) return "Category is required.";
+function validateTask(task) {
+  if (!task.description) return "Task description is required.";
+  if (!task.groupId) return "Task group id is required.";
   return "";
 }

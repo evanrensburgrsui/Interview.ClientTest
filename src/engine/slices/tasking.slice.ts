@@ -1,14 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getTaskGroups, getTasks, TaskDetailsModel, TaskGroupModel } from "../proxies/task.proxy";
+import {
+  getTaskGroups,
+  getTasks,
+  TaskDetailsModel,
+  TaskGroupModel,
+} from "../proxies/task.proxy";
 
 export const $getTasks = createAsyncThunk("thunk-get-tasks", getTasks);
-export const $getTaskGroups = createAsyncThunk("thunk-get-task-groups", getTaskGroups);
+export const $getTaskGroups = createAsyncThunk(
+  "thunk-get-task-groups",
+  getTaskGroups
+);
 
 export const taskingSlice = createSlice({
-  name: "user",
+  name: "tasking",
   initialState: {
     activeTasks: new Array<TaskDetailsModel>(),
-    taskGroups: new Array<TaskGroupModel>()
+    taskGroups: new Array<TaskGroupModel>(),
   },
   reducers: {},
   extraReducers(builder) {
