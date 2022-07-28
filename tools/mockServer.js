@@ -24,7 +24,7 @@ server.post("/tasks/", function (req, res, next) {
   if (error) {
     res.status(400).send(error);
   } else {
-    req.body.slug = createSlug(req.body.title);
+    req.body.slug = createSlug(req.body.description);
     next();
   }
 });
