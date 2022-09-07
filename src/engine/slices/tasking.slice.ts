@@ -5,7 +5,7 @@ export const $getTasks = createAsyncThunk("thunk-get-tasks", getTasks);
 export const $getTaskGroups = createAsyncThunk("thunk-get-task-groups", getTaskGroups);
 
 export const taskingSlice = createSlice({
-  name: "user",
+  name: "tasking",
   initialState: {
     activeTasks: new Array<TaskDetailsModel>(),
     taskGroups: new Array<TaskGroupModel>()
