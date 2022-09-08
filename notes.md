@@ -3,6 +3,9 @@
 - Replaced all instances of "JOHN DOE" with "Valerie Olson"
 
 2 - **Remove the LOGIN button and have the application authenticate when the app.navbar component rendered**
+- Removed LOGIN button
+  - Replaced with a spinner while loading
+- Added a useEffect hook in the app.navbar component that calls the authenticate function if not already authenticated
 
 3 - **Clicking on the Task Group Filter is not working. Add logic so that when a Task Group Filter is selected, the task list only displays filtered results**
 
