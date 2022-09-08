@@ -65,7 +65,7 @@ const newTask = {
 };
 
 const authenticatedUser = {
-  fullName: "John Doe",
+  fullName: "Valerie Olson",
   accessToken: "poiuasd3jsf787nb2jhk20.923jwejhwb09poalhqn244939505yakqjqwercn4209asmghopj2r4lkjsrgm9823045jkl.lkj12345oiu",
   accessSeconds: 30
 };
