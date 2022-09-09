@@ -73,3 +73,28 @@ export const saveTask = async (task: TaskDetailsModel): Promise<Array<TaskDetail
     return await Promise.reject();
   }
 };
+
+export const deleteTask = async (id: number): Promise<Array<TaskDetailsModel>> => {
+  try {
+    const valid = id > 0;
+    if (valid) {
+      let apiurl = `${apiBaseUrl}/tasks`;
+      if (id) apiurl += `/${id}`;
+
+      const apiinit = {
+        method: "DELETE",
+        headers: apiBaseHeaders,
+        credentials: "omit",
+      } as RequestInit;
+      const apiresponse = await fetch(apiurl, apiinit);
+      if (apiresponse && apiresponse.ok) {
+        const apiresult = (await apiresponse.json()) as Array<TaskDetailsModel>;
+        if (apiresult) return apiresult;
+      }
+      throw new Error("Empty or invalid api response");
+    }
+    throw new Error("Cannot save an invalid task");
+  } catch (ex) {
+    return await Promise.reject();
+  }
+};

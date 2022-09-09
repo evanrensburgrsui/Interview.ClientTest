@@ -37,6 +37,9 @@
 - Added addTask slice to store
 
 5 - **When clicking on the Mark Complete button, call the api to delete the task and remove it from the list of displayed tasks**
+- Added deleteTask to task proxy
+- Linked Mark Complete to the deleteTask function
+  - Upon success, splices out the task from the activeTasks array
 
 6 - **Add a common spinner control. Any spinner of your choice. The mock api is coded to mimic a delay. Up the api delay to 2 seconds (mockServer.js) and show the spinner when the task list loads**
   - Installed react-spinners package

@@ -1,23 +1,39 @@
 import styled from "@emotion/styled";
-import { FC } from "react";
-import { TaskDetailsModel } from "../engine/proxies/task.proxy";
-import { mapProps } from "../engine/redux";
+import {FC} from "react";
+import {deleteTask, TaskDetailsModel} from "../engine/proxies/task.proxy";
+import {mapDispatch, mapProps} from "../engine/redux";
 import CoreButton from "./controls/button";
+import {removeTask} from "../engine/slices/tasking.slice";
 
 type Props = {
   task: TaskDetailsModel;
 };
 
 const AppTasksTile: FC<Props> = (props) => {
+  const dispatch = mapDispatch();
   const groupid = props.task.groupId;
   const group = mapProps((state) => state.tasking.taskGroups.find((inst) => inst.id === groupid));
+
+  function completeTask() {
+    console.log("Marking task complete: ", props.task);
+    deleteTask(props.task.id)
+      .then((res) => {
+        console.log("Deleted task: ", res);
+        dispatch(removeTask({ id: props.task.id }));
+      }).catch((err) => {
+      // Ideally capture the exception
+      console.error(err);
+      // Also ideally display the error to the user
+    });
+  }
+
   if (props.task) {
     return (
       <Styled>
         <div className="description">{props.task.description}</div>
         <div className="group">{group && group.name}</div>
         <div className="complete">
-          <CoreButton text="Mark Complete" click={() => {}} />
+          <CoreButton text="Mark Complete" click={completeTask} />
         </div>
       </Styled>
     );

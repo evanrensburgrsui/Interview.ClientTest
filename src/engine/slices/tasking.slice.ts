@@ -17,8 +17,15 @@ export const taskingSlice = createSlice({
     },
     setTaskGroupSelected: (state, action) => {
       // Update selected in taskGroups
-      const group = state.taskGroups.find((g) => g.id === action.payload.id);
+      const group = state.taskGroups.find((group) => group.id === action.payload.id);
       if (group) group.selected = action.payload.selected;
+      else console.error("Group not found");
+    },
+    removeTask: (state, action) => {
+      // Splice out the task from activeTasks
+      const index = state.activeTasks.findIndex((task) => task.id === action.payload.id);
+      if (index >= 0) state.activeTasks.splice(index, 1);
+      else console.error("Task not found in activeTasks", state.activeTasks, action.payload);
     }
   },
   extraReducers(builder) {
@@ -30,5 +37,5 @@ export const taskingSlice = createSlice({
     });
   },
 });
-export const {setDisplayTasks, setTaskGroupSelected} = taskingSlice.actions;
+export const {setDisplayTasks, setTaskGroupSelected, removeTask} = taskingSlice.actions;
 export default taskingSlice.reducer;
