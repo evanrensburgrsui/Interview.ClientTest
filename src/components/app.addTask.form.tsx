@@ -5,9 +5,10 @@ import CoreInput from "./controls/input";
 import {useNavigate} from "react-router-dom";
 import CoreSelect from "./controls/select";
 import {mapDispatch, mapProps} from "../engine/redux";
-import {$getTaskGroups} from "../engine/slices/tasking.slice";
+import {$getTaskGroups, setTasksLoading} from "../engine/slices/tasking.slice";
 import {setDescription, setGroupId} from "../engine/slices/addTask.slice";
 import {saveTask, TaskGroupModel} from "../engine/proxies/task.proxy";
+import Spinner from "./loaders/spinner";
 
 const AddTaskForm: FC = () => {
   const dispatch = mapDispatch();
@@ -15,6 +16,7 @@ const AddTaskForm: FC = () => {
   const groups = mapProps((state) => state.tasking.taskGroups);
   const description = mapProps((state) => state.addTask.description);
   const selectedGroupId = mapProps((state) => state.addTask.selectedGroupId);
+  const tasksLoading = mapProps((state) => state.tasking.tasksLoading);
 
   // Error state
   const [descriptionError, setDescriptionError] = useState(false);
@@ -44,25 +46,37 @@ const AddTaskForm: FC = () => {
     if(isValidDescription && isValidGroup) {
       setGroupError(false);
       setDescriptionError(false);
+      dispatch(setTasksLoading(true));
 
       saveTask({
         // Auto-increments server-side
         id: 0,
         description,
         groupId: selectedGroupId
-      }).then(res => {
-        console.log("Saved task: ", res);
-        navigate('/');
-      }).catch(err => {
-        // Ideally capture the exception
-        console.error(err);
-        // TODO: Display the error to the user
-      });
+      })
+        .then(res => {
+          console.log("Saved task: ", res);
+          navigate('/');
+        })
+        .catch(err => {
+          // Ideally capture the exception
+          console.error(err);
+          // TODO: Display an error to the user
+        })
+        .finally(() => {
+          dispatch(setTasksLoading(false));
+        });
     } else {
        // Highlight invalid field labels
       setGroupError(!isValidGroup);
       setDescriptionError(!isValidDescription);
     }
+  }
+
+  if(tasksLoading) {
+    return <Styled>
+      <Spinner/>
+    </Styled>
   }
 
   return (

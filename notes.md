@@ -42,9 +42,15 @@
   - Upon success, splices out the task from the activeTasks array
 
 6 - **Add a common spinner control. Any spinner of your choice. The mock api is coded to mimic a delay. Up the api delay to 2 seconds (mockServer.js) and show the spinner when the task list loads**
-  - Installed react-spinners package
+- Installed react-spinners package
+- Added BounceSpinner to Home
+- Added BounceSpinner to the Task List
+- Added BounceSpinner to the Add Task page
 
 ## Questions
-1. Do you use any component libraries like MUI?
+1. On line 6 & 7 of [select.tsx](./src/components/controls/select.tsx), I've copied the HTMLSelectAttributes, but is there a way to reference the types instead?
+   1. `defaultValue?: string | number | readonly string[] | undefined;`
 
-2. If I notice a minor typo, may I just correct it?
+I'm also emailing some questions. 
+Thank you!
+This was really fun!

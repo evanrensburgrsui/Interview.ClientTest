@@ -3,7 +3,7 @@ import {FC} from "react";
 import {mapProps} from "../engine/redux";
 import AppNav from "./app.navbar";
 import AppTasks from "./app.tasks";
-import {BounceLoader} from "react-spinners";
+import Spinner from "./loaders/spinner";
 
 const AppHome: FC = () => {
   const ready = mapProps((state) => state.user.isAuthenticated);
@@ -14,7 +14,14 @@ const AppHome: FC = () => {
         <AppNav title={'TASKS'} />
       </div>
       {/* Preferably we'd have the color in a theme */}
-      <div className="tasks">{ready ? <AppTasks /> : <BounceLoader color={'#61dafb'}/>}</div>
+      <div className="tasks">
+        {ready ?
+          <AppTasks/>
+          : <div style={{width: '100%'}}>
+            <Spinner/>
+          </div>
+        }
+      </div>
     </Styled>
   );
 };

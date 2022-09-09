@@ -1,11 +1,18 @@
 import styled from "@emotion/styled";
 import {FC, useEffect} from "react";
 import {mapDispatch, mapProps} from "../engine/redux";
-import {$getTaskGroups, $getTasks, setDisplayTasks, setTaskGroupSelected} from "../engine/slices/tasking.slice";
+import {
+  $getTaskGroups,
+  $getTasks,
+  setDisplayTasks,
+  setTaskGroupSelected,
+  setTasksLoading
+} from "../engine/slices/tasking.slice";
 import AppTasksTile from "./app.tasks.tile";
 import AppTasksGroup from "./app.tasks.group";
 import CoreButton from "./controls/button";
 import {useNavigate} from "react-router-dom";
+import Spinner from "./loaders/spinner";
 
 const AppTasks: FC = () => {
   const dispatch = mapDispatch();
@@ -13,11 +20,19 @@ const AppTasks: FC = () => {
   const tasks = mapProps((state) => state.tasking.activeTasks);
   const displayTasks = mapProps((state) => state.tasking.displayTasks);
   const groups = mapProps((state) => state.tasking.taskGroups);
+  const tasksLoading = mapProps((state) => state.tasking.tasksLoading);
 
   // Networking
   useEffect((): void => {
-    dispatch($getTaskGroups());
-    dispatch($getTasks());
+    dispatch(setTasksLoading(true));
+    let promises = [
+      dispatch($getTaskGroups()),
+      dispatch($getTasks())
+    ];
+    Promise.all(promises)
+      .finally(() => {
+        dispatch(setTasksLoading(false));
+      });
   }, [dispatch]);
 
   // Filtering
@@ -60,9 +75,12 @@ const AppTasks: FC = () => {
           <div className="groups">{taskgroups}</div>
           <CoreButton text={"Add Task"} click={() => {navigate('/task')}}/>
         </div>
-        <div className="tasks">{tasktiles}</div>
+        <div className="tasks">{tasksLoading ? <Spinner/> : tasktiles}</div>
       </Styled>
     );
+  }
+  if(tasksLoading) {
+    return <Spinner/>;
   }
   return <h3>No Tasks</h3>;
 };

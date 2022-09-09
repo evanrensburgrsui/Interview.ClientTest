@@ -3,7 +3,7 @@ import {FC} from "react";
 import {deleteTask, TaskDetailsModel} from "../engine/proxies/task.proxy";
 import {mapDispatch, mapProps} from "../engine/redux";
 import CoreButton from "./controls/button";
-import {removeTask} from "../engine/slices/tasking.slice";
+import {removeTask, setTasksLoading} from "../engine/slices/tasking.slice";
 
 type Props = {
   task: TaskDetailsModel;
@@ -16,15 +16,20 @@ const AppTasksTile: FC<Props> = (props) => {
 
   function completeTask() {
     console.log("Marking task complete: ", props.task);
+    dispatch(setTasksLoading(true));
     deleteTask(props.task.id)
       .then((res) => {
         console.log("Deleted task: ", res);
-        dispatch(removeTask({ id: props.task.id }));
-      }).catch((err) => {
-      // Ideally capture the exception
-      console.error(err);
-      // Also ideally display the error to the user
-    });
+        dispatch(removeTask({id: props.task.id}));
+      })
+      .catch((err) => {
+        // Ideally capture the exception
+        console.error(err);
+        // Also ideally display the error to the user
+      })
+      .finally(() => {
+        dispatch(setTasksLoading(false));
+      });
   }
 
   if (props.task) {

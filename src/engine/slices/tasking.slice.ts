@@ -10,6 +10,7 @@ export const taskingSlice = createSlice({
     activeTasks: new Array<TaskDetailsModel>(),
     displayTasks: new Array<TaskDetailsModel>(),
     taskGroups: new Array<TaskGroupModel>(),
+    tasksLoading: false,
   },
   reducers: {
     setDisplayTasks: (state, action) => {
@@ -20,6 +21,9 @@ export const taskingSlice = createSlice({
       const group = state.taskGroups.find((group) => group.id === action.payload.id);
       if (group) group.selected = action.payload.selected;
       else console.error("Group not found");
+    },
+    setTasksLoading: (state, action) => {
+      state.tasksLoading = action.payload;
     },
     removeTask: (state, action) => {
       // Splice out the task from activeTasks
@@ -37,5 +41,5 @@ export const taskingSlice = createSlice({
     });
   },
 });
-export const {setDisplayTasks, setTaskGroupSelected, removeTask} = taskingSlice.actions;
+export const {setDisplayTasks, setTaskGroupSelected, setTasksLoading, removeTask} = taskingSlice.actions;
 export default taskingSlice.reducer;
