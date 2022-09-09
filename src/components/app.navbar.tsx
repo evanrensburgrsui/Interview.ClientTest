@@ -4,7 +4,11 @@ import {mapDispatch, mapProps} from "../engine/redux";
 import logo from "../index.svg";
 import {$authenticateUser} from "../engine/slices/user.slice";
 
-const AppNav: FC = () => {
+type Props = {
+  title: string;
+};
+
+const AppNav: FC<Props> = (props) => {
   const dispatch = mapDispatch();
   const username = mapProps((state) => state.user.displayName);
   const isAuthenticated = mapProps((state) => state.user.isAuthenticated);
@@ -18,7 +22,7 @@ const AppNav: FC = () => {
 
   return (
     <Styled>
-      <h1>TASKS</h1>
+      <h1>{props.title}</h1>
       <div>
         <img src={logo} className="logo" alt="logo" />
         <div>{username}</div>

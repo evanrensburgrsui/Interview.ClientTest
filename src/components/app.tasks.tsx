@@ -4,12 +4,15 @@ import {mapDispatch, mapProps} from "../engine/redux";
 import {$getTaskGroups, $getTasks, setDisplayTasks, setTaskGroupSelected} from "../engine/slices/tasking.slice";
 import AppTasksTile from "./app.tasks.tile";
 import AppTasksGroup from "./app.tasks.group";
+import CoreButton from "./controls/button";
+import {useNavigate} from "react-router-dom";
 
 const AppTasks: FC = () => {
+  const dispatch = mapDispatch();
+  const navigate = useNavigate();
   const tasks = mapProps((state) => state.tasking.activeTasks);
   const displayTasks = mapProps((state) => state.tasking.displayTasks);
   const groups = mapProps((state) => state.tasking.taskGroups);
-  const dispatch = mapDispatch();
 
   // Networking
   useEffect((): void => {
@@ -53,7 +56,10 @@ const AppTasks: FC = () => {
 
     return (
       <Styled>
-        <div className="groups">{taskgroups}</div>
+        <div className="toolbar">
+          <div className="groups">{taskgroups}</div>
+          <CoreButton text={"Add Task"} click={() => {navigate('/task')}}/>
+        </div>
         <div className="tasks">{tasktiles}</div>
       </Styled>
     );
@@ -65,14 +71,20 @@ const Styled = styled.div`
   height: 100%;
   display: grid;
   grid-template:
-    "groups" auto
+    "toolbar" auto
     "tasks" 1fr
     / 1fr;
-  & > .groups {
-    grid-area: groups;
+  & > .toolbar {
+    grid-area: toolbar;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     column-gap: 4px;
+    & > .groups {
+      display: flex;
+      flex-direction: row;
+      column-gap: 4px;
+    }
   }
   & > .tasks {
     grid-area: tasks;

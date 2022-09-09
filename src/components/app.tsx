@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { FC } from "react";
-import { Provider } from "react-redux";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {FC} from "react";
+import {Provider} from "react-redux";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import store from "../engine/redux";
 import AppHome from "./app.home";
+import AddTask from "./app.addTask";
 
 const App: FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: FC = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<AppHome />} />
+            <Route path="/task" element={<AddTask />} />
           </Routes>
         </BrowserRouter>
       </Styled>

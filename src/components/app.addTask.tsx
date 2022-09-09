@@ -2,19 +2,20 @@ import styled from "@emotion/styled";
 import {FC} from "react";
 import {mapProps} from "../engine/redux";
 import AppNav from "./app.navbar";
-import AppTasks from "./app.tasks";
 import {BounceLoader} from "react-spinners";
+import AddTaskForm from "./app.addTask.form";
 
-const AppHome: FC = () => {
+const AddTask: FC = () => {
   const ready = mapProps((state) => state.user.isAuthenticated);
 
   return (
     <Styled>
+      {/* Preferably placed in a layout */}
       <div className="navbar">
-        <AppNav title={'TASKS'} />
+        <AppNav title={'ADD TASK'}/>
       </div>
-      {/* Preferably we'd have the color in a theme */}
-      <div className="tasks">{ready ? <AppTasks /> : <BounceLoader color={'#61dafb'}/>}</div>
+      {/* Preferably the router would handle auth */}
+      <div className="addTask">{ready ? <AddTaskForm /> : <BounceLoader color={'#61dafb'}/>}</div>
     </Styled>
   );
 };
@@ -31,10 +32,10 @@ const Styled = styled.div`
     width: 70%;
     justify-self: center;
   }
-  & > .tasks {
+  & > .addTask {
     grid-area: tasks;
     width: 70%;
     justify-self: center;
   }
 `;
-export default AppHome;
+export default AddTask;
