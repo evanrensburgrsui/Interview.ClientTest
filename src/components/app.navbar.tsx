@@ -9,8 +9,8 @@ const AppNav: FC = () => {
   const username = mapProps((state) => state.user.displayName);
   const isAuthenticated = mapProps((state) => state.user.isAuthenticated);
 
-  useEffect(() => {
-    // Will remount twice in development
+  useEffect((): void => {
+    // Will mount twice in development
     if (!isAuthenticated) {
       dispatch($authenticateUser());
     }

@@ -13,7 +13,8 @@ const AppHome: FC = () => {
       <div className="navbar">
         <AppNav />
       </div>
-      <div className="tasks">{ready ? <AppTasks /> : <BounceLoader/>}</div>
+      {/* Preferably we'd have the color in a theme */}
+      <div className="tasks">{ready ? <AppTasks /> : <BounceLoader color={'#61dafb'}/>}</div>
     </Styled>
   );
 };

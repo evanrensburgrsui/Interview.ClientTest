@@ -8,6 +8,13 @@
 - Added a useEffect hook in the app.navbar component that calls the authenticate function if not already authenticated
 
 3 - **Clicking on the Task Group Filter is not working. Add logic so that when a Task Group Filter is selected, the task list only displays filtered results**
+- Added displayTasks state to the tasking slice
+  - Alternatively we could have filtered on each render
+  - Alternatively we could have modified TaskDetailsModel to include a display property
+- Added selected state to the TaskGroupModel
+- Added useEffect to update displayTasks
+- Added function to dispatch group selections
+- Added reducer to handle group selections
 
 4 - **Add a button to create a New Task. This should be a new page that is loaded by navigating to http://localhost:3000/task**
 
@@ -20,6 +27,7 @@
 5 - **When clicking on the Mark Complete button, call the api to delete the task and remove it from the list of displayed tasks**
 
 6 - **Add a common spinner control. Any spinner of your choice. The mock api is coded to mimic a delay. Up the api delay to 2 seconds (mockServer.js) and show the spinner when the task list loads**
+  - Installed react-spinners package
 
 ## Questions
 1. Do you use any component libraries like MUI?

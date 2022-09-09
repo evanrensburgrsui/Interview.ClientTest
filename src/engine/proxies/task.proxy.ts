@@ -1,4 +1,4 @@
-import { apiBaseHeaders, apiBaseUrl } from "../common/common.constants";
+import {apiBaseHeaders, apiBaseUrl} from "../common/common.constants";
 
 export interface TaskDetailsModel {
   id: number;
@@ -9,6 +9,7 @@ export interface TaskDetailsModel {
 export interface TaskGroupModel {
   id: number;
   name: string;
+  selected: boolean;
 }
 
 export const getTasks = async (): Promise<Array<TaskDetailsModel>> => {
